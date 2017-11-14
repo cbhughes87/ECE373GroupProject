@@ -58,5 +58,7 @@ public class ShoppingCart {
 		return products.get(p);
 	}
 	
-	public double getTotal
+	public double getTotal(){
+		return total;
+	}
 }
