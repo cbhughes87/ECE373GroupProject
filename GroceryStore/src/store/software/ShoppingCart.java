@@ -12,6 +12,7 @@ public class ShoppingCart {
 		total = 0;
 	}
 	
+	
 	public void addProduct(Product toAdd){
 		if(products.containsKey(toAdd))
 			products.put(toAdd, products.get(toAdd) + 1);
