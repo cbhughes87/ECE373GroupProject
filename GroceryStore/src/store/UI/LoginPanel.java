@@ -13,12 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-
 public class LoginPanel extends JPanel {
 	private JTextField user;
 	private JPasswordField pass;
 	private JLabel userLabel, passLabel;
 	private JButton loginButton;
+	private JButton newUserButton;
 	public LoginPanel(){
 		super();
 		int loginTopBottom = 250;
@@ -29,6 +29,7 @@ public class LoginPanel extends JPanel {
 		userLabel = new JLabel("Username");
 		passLabel = new JLabel("Password");
 		loginButton = new JButton("Log In");
+		newUserButton = new JButton("New User");
 		
 		user.setMaximumSize(new Dimension(120, 20));
 		user.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -48,6 +49,9 @@ public class LoginPanel extends JPanel {
 		loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		loginButton.setFont(loginFont);
 		
+		newUserButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		newUserButton.setFont(loginFont);
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(500, 500));
 		add(Box.createRigidArea(new Dimension(100, loginTopBottom)));
@@ -58,12 +62,17 @@ public class LoginPanel extends JPanel {
 		add(pass);
 		add(Box.createVerticalGlue());
 		add(loginButton);
+		add(newUserButton);
 		add(Box.createRigidArea(new Dimension(100, loginTopBottom)));
+		
 	}
 	public String[] getText(){
 		return new String[]{user.getText(), pass.getPassword().toString()};
 	}
 	public void addLoginListener(ActionListener a){
 		loginButton.addActionListener(a);
+	}
+	public void addNewUserListener(ActionListener a){
+		newUserButton.addActionListener(a);
 	}
 }
