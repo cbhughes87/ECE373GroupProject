@@ -3,17 +3,16 @@ package store.UI;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import store.objects.GroceryStore;
 
 public class LoginPanel extends JPanel {
 	private JTextField user;
@@ -60,5 +59,11 @@ public class LoginPanel extends JPanel {
 		add(Box.createVerticalGlue());
 		add(loginButton);
 		add(Box.createRigidArea(new Dimension(100, loginTopBottom)));
+	}
+	public String[] getText(){
+		return new String[]{user.getText(), pass.getPassword().toString()};
+	}
+	public void addLoginListener(ActionListener a){
+		loginButton.addActionListener(a);
 	}
 }
