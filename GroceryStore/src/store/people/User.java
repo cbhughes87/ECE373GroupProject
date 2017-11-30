@@ -26,10 +26,12 @@ public abstract class User {
 		perms = new Permissions(false, false, false, false, false, false, false);
 		cart = new ShoppingCart();
 		actions = new Log();
+		actions.setName("Log for user: " + name);
 	}
 	
 	public void setName(String newName){
 		name = newName;
+		actions.setName("Log for user: " + name);
 	}
 	
 	public String getName(){
@@ -50,6 +52,12 @@ public abstract class User {
 	
 	public void addToCart(Product p, int amt){
 		cart.addProduct(p, amt);
+		actions.addEvent(name + " added " + amt + " " + p.getName() + "(s) to their cart.\n\tTheir cart now has a total cost of $" + String.format("%.2f", cart.getTotal()));
+	}
+	
+	public void removeFromCart(Product p, int amt){
+		cart.removeProduct(p, amt);
+		actions.addEvent(name + " removed " + amt + " " + p.getName() + "(s) from their cart.\n\tTheir cart now has a total cost of $" + String.format("%.2f", cart.getTotal()) + "\n");
 	}
 	
 	public Log getActions(){
