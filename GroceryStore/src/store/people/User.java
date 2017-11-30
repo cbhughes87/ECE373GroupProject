@@ -4,7 +4,7 @@ import store.software.ShoppingCart;
 import store.software.Log;
 import store.software.Permissions;
 
-public class User {
+public abstract class User {
 	private String name;
 	private String password; //Obviously not an actual program...
 	
@@ -12,7 +12,7 @@ public class User {
 	private Log actions;
 	private Permissions perms;
 	
-	public User(){
+	public User() {
 		name = "";
 		password = "";
 		perms = new Permissions(false, false, false, false, false, false, false);
@@ -56,11 +56,15 @@ public class User {
 		return actions;
 	}
 	
-	public Permissions getPermissions(){
+//	public abstract Permissions getPermissions();	
+//	public abstract void setPermissions(Permissions newPerms);
+
+	public Permissions getPerms() {
 		return perms;
 	}
-	
-	public void setPermissions(Permissions newPerms){
-		perms = newPerms;
+
+	public void setPerms(Permissions perms) {
+		this.perms = perms;
 	}
+
 }
