@@ -1,15 +1,24 @@
 package store.objects;
 import store.software.Rating;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 public class Product {
-	private String name;
+	private String name, unit;
 	private int idNum, quantity;
 	private ArrayList<Rating> userRatings;
 	private double price;
-	
+	private BufferedImage img;
+	private ImageIcon icon;
 	public Product(){
 		name = "";
+		unit = "item";
 		idNum = -1;
 		quantity = 01;
 		userRatings = new ArrayList<Rating>();
@@ -50,6 +59,14 @@ public class Product {
 		return name;
 	}
 	
+	public void setUnit(String newName){
+		unit = newName;
+	}
+	
+	public String getUnit(){
+		return unit;
+	}
+	
 	public void setIDNum(int num){
 		idNum = num;
 	}
@@ -80,5 +97,14 @@ public class Product {
 	
 	public double getPrice(){
 		return price;
+	}
+	
+	public void openImage(String path) throws IOException{
+		img = ImageIO.read(new File(path));
+		icon = new ImageIcon(img);
+	}
+	
+	public ImageIcon getImage(){
+		return icon;
 	}
 }
