@@ -18,5 +18,8 @@ public class Inventory {
 	
 	public void updateProduct(Product aProduct) {
 		//slightly messy implementation. Maybe check for a product with identical name or ID then update remaining info?
+		for(Product prod : products){
+		
+		}
 	}
 }
