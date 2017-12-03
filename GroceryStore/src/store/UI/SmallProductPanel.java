@@ -20,15 +20,19 @@ public class SmallProductPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -3408113148015332149L;
-	private static final int starImageSize = 20;
+	private int starImageSize;
 	private static final int numStars = 5;
 	
 	private Product contained;
 	private JLabel img, name, price, stock, rating, stars;
-	public SmallProductPanel(Product toRep){
+	private int width, height;
+	public SmallProductPanel(Product toRep, int width, int height){
 		super();
+		this.width = width;
+		this.height = height;
+		starImageSize = height * 4 / 15;
 		contained = toRep;
-		setPreferredSize(new Dimension(175, 75));
+		setMinimumSize(new Dimension(this.width, this.height));
 		setLayout(new GridBagLayout());
 		createLabels();
 		createStars();
@@ -52,7 +56,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridheight = 1;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_START;
-		c.insets = new Insets(0, 5, 0, 0);
+		c.insets = new Insets(0, height / 15, 0, 0);
 		add(name, c);
 		
 		c.gridx = 3;
@@ -61,7 +65,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridheight = 1;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_START;
-		c.insets = new Insets(5, 5, 5, 0);
+		c.insets = new Insets(height / 15, height / 15, height / 15, 0);
 		add(price, c);
 		
 		c.gridx = 5;
@@ -70,7 +74,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridheight = 1;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_END;
-		c.insets = new Insets(5, 0, 5, 5);
+		c.insets = new Insets(height / 15, 0, height / 15, height / 15);
 		add(stock, c);
 		
 		c.gridx = 3;
@@ -79,7 +83,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridheight = 1;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_START;
-		c.insets = new Insets(5, 5, 5, 0);
+		c.insets = new Insets(height / 15, height / 15, 0, 0);
 		add(stars, c);
 		
 		c.gridx = 6;
@@ -88,7 +92,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridheight = 1;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_END;
-		c.insets = new Insets(5, 5, 5, 5);
+		c.insets = new Insets(height / 15, height / 15, 0, height / 15);
 		add(rating, c);
 	}
 	
@@ -116,7 +120,7 @@ public class SmallProductPanel extends JPanel {
 	}
 	
 	private void createLabels(){
-		img = new JLabel(new ImageIcon(GroceryGUI.getScaledImage(contained.getImage(), 75, 75)));
+		img = new JLabel(new ImageIcon(GroceryGUI.getScaledImage(contained.getImage(), height, height)));
 		img.setAlignmentX(CENTER_ALIGNMENT);
 		img.setAlignmentY(CENTER_ALIGNMENT);
 		name = new JLabel(contained.getName());

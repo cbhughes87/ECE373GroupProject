@@ -13,14 +13,16 @@ public class Product {
 	private String name, unit;
 	private int idNum, quantity;
 	private ArrayList<Rating> userRatings;
+	private ArrayList<String> tags;
 	private double price;
 	private BufferedImage img;
 	public Product(){
 		name = "";
 		unit = "item";
 		idNum = -1;
-		quantity = 01;
+		quantity = 0;
 		userRatings = new ArrayList<Rating>();
+		tags = new ArrayList<String>();
 		price = -1;
 	}
 	
@@ -104,5 +106,21 @@ public class Product {
 	
 	public BufferedImage getImage(){
 		return img;
+	}
+	
+	public void addTag(String newTag){
+		if(!tags.contains(newTag.toLowerCase())){
+			tags.add(newTag.toLowerCase());
+		}
+	}
+	
+	public void removeTag(String tag){
+		if(tags.contains(tag.toLowerCase())){
+			tags.remove(tag.toLowerCase());
+		}
+	}
+	
+	public ArrayList<String> getTags(){
+		return tags;
 	}
 }

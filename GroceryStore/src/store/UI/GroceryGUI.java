@@ -20,7 +20,7 @@ public class GroceryGUI {
 	private JFrame frame;
 	private GroceryStore store;
 	private LoginPanel login;
-	private SmallProductPanel test;
+	private StoreMainPanel test;
 	
 	
 	public GroceryGUI(){
@@ -44,7 +44,12 @@ public class GroceryGUI {
 	}
 	
 	public void showTest(){
-		test = new SmallProductPanel(store.getDepartments().get(0).getInventory().getProducts().get(0));
+		test = new StoreMainPanel(store);
+		test.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				frame.pack();
+			}
+		});
 		frame.remove(login);
 		frame.add(test);
 		frame.pack();
