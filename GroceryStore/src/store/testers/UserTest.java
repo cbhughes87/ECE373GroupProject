@@ -1,6 +1,6 @@
 package store.testers;
 
-import store.people.User;
+import store.people.*;
 import store.software.Permissions;
 import store.software.ShoppingCart;
 import store.software.Rating;
@@ -15,17 +15,16 @@ public class UserTest {
 
 	@Test
 	public void testGettersSetters() {
-		User person = new User();
+		User person = new Shopper();
 		person.setName("John");
 		person.setPassword("A very secure password");
-		person.setPermissions(new Permissions(true, false, false, false, false, false, false));
-		assert((person.getName() + " can shop: " + person.getPermissions().getPermission("shop")).equals("John can shop: true"));
+		assert((person.getName() + " can shop: " + person.getPerms().getPermission("shop")).equals("John can shop: true"));
 		assert(person.getPassword().equals("A very secure password"));
 	}
 	
 	@Test
 	public void testAddRemoveCart(){
-		User person = new User();
+		User person = new Shopper();
 		Product apple = new Product();
 		person.setName("Test person");
 		apple.setIDNum(1);

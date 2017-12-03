@@ -15,7 +15,6 @@ public class Product {
 	private ArrayList<Rating> userRatings;
 	private double price;
 	private BufferedImage img;
-	private ImageIcon icon;
 	public Product(){
 		name = "";
 		unit = "item";
@@ -101,10 +100,9 @@ public class Product {
 	
 	public void openImage(String path) throws IOException{
 		img = ImageIO.read(new File(path));
-		icon = new ImageIcon(img);
 	}
 	
-	public ImageIcon getImage(){
-		return icon;
+	public BufferedImage getImage(){
+		return img;
 	}
 }
