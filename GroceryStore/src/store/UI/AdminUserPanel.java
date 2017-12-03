@@ -1,5 +1,7 @@
 package store.UI;
 
-public class AdminUserPanel {
+import javax.swing.JPanel;
+
+public class AdminUserPanel extends JPanel {
 
 }

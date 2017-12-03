@@ -28,7 +28,7 @@ public class GroceryGUI {
 		frame = new JFrame("e-Groceries");
 		frame.setMinimumSize(new Dimension(1280, 720));
 		store = new GroceryStore();
-		login = new LoginPanel();
+		login = new LoginPanel(store);
 		
 		login.addLoginListener(new LoginListener());
 		
@@ -68,7 +68,9 @@ public class GroceryGUI {
 	
 	private class LoginListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			showTest();
+			if(login.login()){
+				showTest();
+			}
 		}
 	}
 }
