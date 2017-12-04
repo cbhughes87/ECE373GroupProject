@@ -139,7 +139,7 @@ public class SmallProductPanel extends JPanel {
 		price = new JLabel(pstring);
 		price.setAlignmentX(LEFT_ALIGNMENT);
 		price.setAlignmentY(CENTER_ALIGNMENT);
-		String stockString = String.format("%d %s(s)", contained.getQuantity(), contained.getUnit());
+		String stockString = String.format("%.2f %s(s)", contained.getQuantity(), contained.getUnit());
 		stock = new JLabel(stockString);
 		stock.setAlignmentX(RIGHT_ALIGNMENT);
 		stock.setAlignmentY(CENTER_ALIGNMENT);

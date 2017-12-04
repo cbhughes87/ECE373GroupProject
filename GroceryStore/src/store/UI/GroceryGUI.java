@@ -46,41 +46,15 @@ public class GroceryGUI {
 	}
 	
 	public void showMainPanel(){
-		mainPanel = new StoreMainPanel(store);
-		mainPanel.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				if(e.getActionCommand().equals("refresh"))
-					frame.pack();
-				else if(e.getActionCommand().equals("viewcart")){
-					frame.remove(mainPanel);
-					cartView = new CartPanel(store);
-					cartView.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							frame.remove(cartView);	
-							if(e.getActionCommand().equals("back")){
-								frame.add(mainPanel);
-							} else if(e.getActionCommand().equals("checkout")){
-								test = new CheckoutPanel(store);
-								frame.add(test);
-							}
-							
-							frame.revalidate();
-							frame.repaint();
-							frame.pack();
-						}
-					});
-					frame.add(cartView);
-					frame.pack();
-				}
-				else if(e.getActionCommand().equals("product")){
-					SmallProductPanel src = (SmallProductPanel)e.getSource();
-					test2 = new LargeProductPanel(store, src.getContained());
-				}
-			}
-		});
+		refreshMainPanel();
 		frame.remove(login);
 		frame.add(mainPanel);
 		frame.pack();
+	}
+	
+	public void refreshMainPanel(){
+		mainPanel = new StoreMainPanel(store);
+		mainPanel.addActionListener(new MainPanelListener());
 	}
 	
 	public static BufferedImage getScaledImage(Image srcImg, int w, int h){
@@ -98,6 +72,74 @@ public class GroceryGUI {
 		public void actionPerformed(ActionEvent e) {
 			if(login.login()){
 				showMainPanel();
+			}
+		}
+	}
+	
+	private class CartListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			frame.remove(cartView);	
+			if(e.getActionCommand().equals("back")){
+				frame.add(mainPanel);
+			} else if(e.getActionCommand().equals("checkout")){
+				test = new CheckoutPanel(store);
+				test.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e) {
+						if(e.getActionCommand().equals("back")){
+							frame.remove(test);	
+							frame.add(mainPanel);
+							frame.revalidate();
+							frame.repaint();
+							frame.pack();
+						}
+						else if(e.getActionCommand().equals("order")){
+							refreshMainPanel();
+						}
+					}
+				});
+				frame.add(test);
+			}
+			
+			frame.revalidate();
+			frame.repaint();
+			frame.pack();
+		}
+	}
+	
+	private class LargeProductListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equals("back")){
+				frame.remove(test2);	
+				frame.add(mainPanel);
+				frame.revalidate();
+				frame.repaint();
+				frame.pack();
+			} else if(e.getActionCommand().equals("add")){
+				refreshMainPanel();
+			}
+		}
+	}
+	
+	private class MainPanelListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equals("refresh"))
+				frame.pack();
+			else if(e.getActionCommand().equals("viewcart")){
+				frame.remove(mainPanel);
+				cartView = new CartPanel(store);
+				cartView.addActionListener(new CartListener());
+				frame.add(cartView);
+				frame.pack();
+			}
+			else if(e.getActionCommand().equals("product")){
+				frame.remove(mainPanel);
+				SmallProductPanel src = (SmallProductPanel)e.getSource();
+				test2 = new LargeProductPanel(store, src.getContained());
+				test2.addActionListener(new LargeProductListener());
+				frame.add(test2);
+				frame.revalidate();
+				frame.repaint();
+				frame.pack();
 			}
 		}
 	}

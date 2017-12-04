@@ -55,9 +55,24 @@ public abstract class User {
 		actions.addEvent(name + " added " + amt + " " + p.getName() + "(s) to their cart.\n\tTheir cart now has a total cost of $" + String.format("%.2f", cart.getTotal()));
 	}
 	
+	public void addToCart(Product p, double amt){
+		cart.addProduct(p, amt);
+		actions.addEvent(name + " added " + amt + " " + p.getName() + "(s) to their cart.\n\tTheir cart now has a total cost of $" + String.format("%.2f", cart.getTotal()));
+	}
+	
 	public void removeFromCart(Product p, int amt){
 		cart.removeProduct(p, amt);
 		actions.addEvent(name + " removed " + amt + " " + p.getName() + "(s) from their cart.\n\tTheir cart now has a total cost of $" + String.format("%.2f", cart.getTotal()) + "\n");
+	}
+	
+	public void removeFromCart(Product p, double amt){
+		cart.removeProduct(p, amt);
+		actions.addEvent(name + " removed " + amt + " " + p.getName() + "(s) from their cart.\n\tTheir cart now has a total cost of $" + String.format("%.2f", cart.getTotal()) + "\n");
+	}
+	
+	public void removeAll(String reason){
+		cart.removeAll(reason);
+		actions.addEvent(name + " removed all items from their cart. Reason: " + reason);
 	}
 	
 	public Log getActions(){

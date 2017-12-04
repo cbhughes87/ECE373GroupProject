@@ -23,6 +23,9 @@ public class Main {
 		tomato.setIDNum(1);
 		tomato.setPrice(5.00);
 		tomato.setQuantity(500);
+		tomato.setInfo("This is a vine-ripened tomato. All craftsdwarfship is of the highest quality. "
+				+ "The sticker is colored red and orange, printed with the name of the farmer who grew this tomato. "
+				+ "The tomato is adorned with leaves and a stem of green, and menaces with spikes of leaves.");
 		tomato.addRating(new Rating(5, "Best tomatos in Canada!"));
 		tomato.addRating(new Rating(3, "They're alright"));
 		tomato.addRating(new Rating(2, "These tomatos are worse than BattleFront 2 (2017)"));
@@ -49,7 +52,7 @@ public class Main {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		pomegranate.setName("Hades' Pomegranates");
+		pomegranate.setName("Hades' Devilishly Good Pomegranates");
 		pomegranate.setIDNum(3);
 		pomegranate.setPrice(6.99);
 		pomegranate.setQuantity(200);
@@ -72,7 +75,7 @@ public class Main {
 		lettuce.addRating(new Rating(4, "Salad is good for you, right?"));
 		lettuce.addRating(new Rating(3, "Didn't come with ranch"));
 		lettuce.addRating(new Rating(1, "I don't like lettuce"));
-		lettuce.setUnit("lb");
+		lettuce.setUnit("head");
 		lettuce.addTag("vegetable");
 		
 		Product orange = new Product();

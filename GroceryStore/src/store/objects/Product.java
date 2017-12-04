@@ -10,8 +10,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Product {
-	private String name, unit;
-	private int idNum, quantity;
+	private String name, unit, info;
+	private int idNum;
+	private double quantity;
 	private ArrayList<Rating> userRatings;
 	private ArrayList<String> tags;
 	private double price;
@@ -19,6 +20,7 @@ public class Product {
 	public Product(){
 		name = "";
 		unit = "item";
+		info = "";
 		idNum = -1;
 		quantity = 0;
 		userRatings = new ArrayList<Rating>();
@@ -52,6 +54,22 @@ public class Product {
 		return false;
 	}
 	
+	public boolean decrement(double amount){
+		if(quantity >= amount && amount >= 0){
+			quantity -= amount;
+			return true;
+		}
+		return false;
+	}
+	
+	public void setInfo(String newInfo){
+		info = newInfo;
+	}
+	
+	public String getInfo(){
+		return info;
+	}
+	
 	public void setName(String newName){
 		name = newName;
 	}
@@ -80,7 +98,7 @@ public class Product {
 		quantity = newQuantity;
 	}
 	
-	public int getQuantity(){
+	public double getQuantity(){
 		return quantity;
 	}
 	

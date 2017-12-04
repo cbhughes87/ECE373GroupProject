@@ -197,7 +197,7 @@ public class CartPanel extends JPanel {
 		for(Product prod : store.getCurrUser().getCart().getProducts()){
 			JLabel[] newArr = new JLabel[]{
 				new JLabel(prod.getName()),
-				new JLabel(store.getCurrUser().getCart().getQuantity(prod) + " " + prod.getUnit()),
+				new JLabel(String.format("%.2f %s", store.getCurrUser().getCart().getQuantity(prod), prod.getUnit())),
 				new JLabel(String.format("$%9.2f / %s", prod.getPrice(), prod.getUnit())),
 				new JLabel(String.format("$%9.2f", prod.getPrice() * store.getCurrUser().getCart().getQuantity(prod)))
 			};
