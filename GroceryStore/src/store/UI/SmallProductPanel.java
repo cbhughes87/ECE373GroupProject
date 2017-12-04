@@ -39,6 +39,10 @@ public class SmallProductPanel extends JPanel {
 		layoutLabels();
 	}
 	
+	public Product getContained(){
+		return contained;
+	}
+	
 	private void layoutLabels(){
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
@@ -54,6 +58,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridy = 0;
 		c.gridwidth = 4;
 		c.gridheight = 1;
+		c.weightx = 1;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.insets = new Insets(0, height / 15, 0, 0);
@@ -63,6 +68,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridy = 1;
 		c.gridwidth = 2;
 		c.gridheight = 1;
+		c.weightx = 0.5;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.insets = new Insets(height / 15, height / 15, height / 15, 0);
@@ -72,6 +78,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridy = 1;
 		c.gridwidth = 2;
 		c.gridheight = 1;
+		c.weightx = 0.5;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(height / 15, 0, height / 15, height / 15);
@@ -81,6 +88,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridy = 2;
 		c.gridwidth = 3;
 		c.gridheight = 1;
+		c.weightx = 0;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.insets = new Insets(height / 15, height / 15, 0, 0);
@@ -90,6 +98,7 @@ public class SmallProductPanel extends JPanel {
 		c.gridy = 2;
 		c.gridwidth = 1;
 		c.gridheight = 1;
+		c.weightx = 1;
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(height / 15, height / 15, 0, height / 15);

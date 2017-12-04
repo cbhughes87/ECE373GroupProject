@@ -5,12 +5,14 @@ import store.UI.GroceryGUI;
 import store.objects.Department;
 import store.objects.GroceryStore;
 import store.objects.Product;
+import store.people.Shopper;
+import store.people.User;
+import store.people.UserType;
 
 public class Main {
 
 	public static void main(String[] args) {
-		GroceryGUI window = new GroceryGUI();
-		GroceryStore store = window.getStore();
+		GroceryStore store = new GroceryStore();
 		Product tomato = new Product();
 		try{
 			tomato.openImage("./res/tomato.png");
@@ -119,9 +121,15 @@ public class Main {
 		Department meat = new Department();
 		meat.setName("Meat");
 		meat.getInventory().addProduct(steak);
-
+		
+		store.addUser("ryan", "password", UserType.SHOPPER);
 		store.addDepartment(produce);
 		store.addDepartment(meat);
+		User ryan = store.getUser("ryan", "password");
+		ryan.addToCart(pomegranate, 5);
+		ryan.addToCart(steak, 5);
+		
+		GroceryGUI window = new GroceryGUI(store);
 	}
 
 }

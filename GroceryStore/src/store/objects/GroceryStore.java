@@ -11,6 +11,7 @@ import store.software.*;
 
 
 public class GroceryStore {
+	public static final double TAXRATE = 0.092;
 	private ArrayList<Department> departments;
 	private ArrayList<User> users;
 	private ArrayList<Log> logs;

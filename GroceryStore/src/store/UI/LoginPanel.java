@@ -1,5 +1,6 @@
 package store.UI;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -42,6 +43,9 @@ public class LoginPanel extends JPanel {
 		int loginTopBottom = 250;
 		int loginTextSize = 20;
 		Font loginFont = new Font(null, Font.PLAIN, loginTextSize);
+		
+		setBackground(Color.white);
+		
 		user = new JTextField(10);
 		pass = new JPasswordField(10);
 		userLabel = new JLabel("Username");

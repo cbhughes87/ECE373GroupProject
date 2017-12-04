@@ -20,16 +20,18 @@ public class GroceryGUI {
 	private JFrame frame;
 	private GroceryStore store;
 	private LoginPanel login;
-	private StoreMainPanel test;
+	private StoreMainPanel mainPanel;
+	private CartPanel cartView;
+	private CheckoutPanel test;
+	private LargeProductPanel test2;
 	
 	
-	public GroceryGUI(){
+	public GroceryGUI(GroceryStore store){
 
 		frame = new JFrame("e-Groceries");
 		frame.setMinimumSize(new Dimension(1280, 720));
-		store = new GroceryStore();
+		this.store = store;
 		login = new LoginPanel(store);
-		
 		login.addLoginListener(new LoginListener());
 		
 		frame.add(login);
@@ -43,15 +45,41 @@ public class GroceryGUI {
 		return store;
 	}
 	
-	public void showTest(){
-		test = new StoreMainPanel(store);
-		test.addActionListener(new ActionListener(){
+	public void showMainPanel(){
+		mainPanel = new StoreMainPanel(store);
+		mainPanel.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				frame.pack();
+				if(e.getActionCommand().equals("refresh"))
+					frame.pack();
+				else if(e.getActionCommand().equals("viewcart")){
+					frame.remove(mainPanel);
+					cartView = new CartPanel(store);
+					cartView.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							frame.remove(cartView);	
+							if(e.getActionCommand().equals("back")){
+								frame.add(mainPanel);
+							} else if(e.getActionCommand().equals("checkout")){
+								test = new CheckoutPanel(store);
+								frame.add(test);
+							}
+							
+							frame.revalidate();
+							frame.repaint();
+							frame.pack();
+						}
+					});
+					frame.add(cartView);
+					frame.pack();
+				}
+				else if(e.getActionCommand().equals("product")){
+					SmallProductPanel src = (SmallProductPanel)e.getSource();
+					test2 = new LargeProductPanel(store, src.getContained());
+				}
 			}
 		});
 		frame.remove(login);
-		frame.add(test);
+		frame.add(mainPanel);
 		frame.pack();
 	}
 	
@@ -69,7 +97,7 @@ public class GroceryGUI {
 	private class LoginListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(login.login()){
-				showTest();
+				showMainPanel();
 			}
 		}
 	}

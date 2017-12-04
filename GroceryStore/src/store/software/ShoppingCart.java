@@ -62,4 +62,13 @@ public class ShoppingCart {
 	public double getTotal(){
 		return total;
 	}
+	
+	public String getViewString(){
+		StringBuilder builder = new StringBuilder("View Cart");
+		if(products.isEmpty()){
+			return builder.toString();
+		}
+		builder.append(" (" + products.size() + ")");
+		return builder.toString();
+	}
 }
