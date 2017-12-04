@@ -22,8 +22,10 @@ public class GroceryGUI {
 	private LoginPanel login;
 	private StoreMainPanel mainPanel;
 	private CartPanel cartView;
-	private CheckoutPanel test;
-	private LargeProductPanel test2;
+	private CheckoutPanel checkout;
+	private LargeProductPanel productView;
+	private AdminProductPanel adminProducts;
+	private AdminUserPanel adminUsers;
 	
 	
 	public GroceryGUI(GroceryStore store){
@@ -82,22 +84,9 @@ public class GroceryGUI {
 			if(e.getActionCommand().equals("back")){
 				frame.add(mainPanel);
 			} else if(e.getActionCommand().equals("checkout")){
-				test = new CheckoutPanel(store);
-				test.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent e) {
-						if(e.getActionCommand().equals("back")){
-							frame.remove(test);	
-							frame.add(mainPanel);
-							frame.revalidate();
-							frame.repaint();
-							frame.pack();
-						}
-						else if(e.getActionCommand().equals("order")){
-							refreshMainPanel();
-						}
-					}
-				});
-				frame.add(test);
+				checkout = new CheckoutPanel(store);
+				checkout.addActionListener(new CheckoutListener());
+				frame.add(checkout);
 			}
 			
 			frame.revalidate();
@@ -106,10 +95,25 @@ public class GroceryGUI {
 		}
 	}
 	
+	private class CheckoutListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equals("back")){
+				frame.remove(checkout);	
+				frame.add(mainPanel);
+				frame.revalidate();
+				frame.repaint();
+				frame.pack();
+			}
+			else if(e.getActionCommand().equals("order")){
+				refreshMainPanel();
+			}
+		}
+	}
+	
 	private class LargeProductListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("back")){
-				frame.remove(test2);	
+				frame.remove(productView);	
 				frame.add(mainPanel);
 				frame.revalidate();
 				frame.repaint();
@@ -134,9 +138,9 @@ public class GroceryGUI {
 			else if(e.getActionCommand().equals("product")){
 				frame.remove(mainPanel);
 				SmallProductPanel src = (SmallProductPanel)e.getSource();
-				test2 = new LargeProductPanel(store, src.getContained());
-				test2.addActionListener(new LargeProductListener());
-				frame.add(test2);
+				productView = new LargeProductPanel(store, src.getContained());
+				productView.addActionListener(new LargeProductListener());
+				frame.add(productView);
 				frame.revalidate();
 				frame.repaint();
 				frame.pack();
