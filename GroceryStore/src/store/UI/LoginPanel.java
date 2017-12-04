@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -35,6 +36,7 @@ public class LoginPanel extends JPanel {
 	private JButton loginButton;
 	private JButton newUserButton;
 	private JLabel errLabel;
+	private ArrayList<ActionListener> actionListeners;
 	
 	private GroceryStore store;
 	public LoginPanel(GroceryStore store){
@@ -46,6 +48,7 @@ public class LoginPanel extends JPanel {
 		
 		setBackground(Color.white);
 		
+		actionListeners = new ArrayList<ActionListener>();
 		user = new JTextField(10);
 		pass = new JPasswordField(10);
 		userLabel = new JLabel("Username");
@@ -71,11 +74,23 @@ public class LoginPanel extends JPanel {
 		
 		loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		loginButton.setFont(loginFont);
+		loginButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				for(ActionListener a : actionListeners){
+					a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Login"));
+				}
+			}
+		});
 		
 		newUserButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		newUserButton.setFont(loginFont);
-		newUserButton.addActionListener(new NewUserListener());
-		
+		newUserButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				for(ActionListener a : actionListeners){
+					a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "New User"));
+				}
+			}
+		});
 		errLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		errLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		errLabel.setFont(loginFont);
@@ -106,18 +121,26 @@ public class LoginPanel extends JPanel {
 		errLabel.setText("<html><font color='red'>Incorrect username or password.</font color></html>");
 		return false;
 	}
-	public void addLoginListener(ActionListener a){
-		loginButton.addActionListener(a);
+	public void addActionListener(ActionListener a){
+		actionListeners.add(a);
 	}
-	private class NewUserListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			String err = store.addUser(user.getText(), new String(pass.getPassword()), UserType.SHOPPER);
-			if(!err.equals("")){
-				errLabel.setText("<html><font color='red'>" + err + "</font color></html>");
-			}else{
-				errLabel.setText("<html><font color='green'>User created successfully.</font color></html>");
-			}
-			
-		}
+//	public void addLoginListener(ActionListener a){
+//		loginButton.addActionListener(a);
+//	}
+	public void addNewUserListener(ActionListener a) {
+		
 	}
+//	
+//	private class NewUserListener implements ActionListener {
+//		public void actionPerformed(ActionEvent e) {
+//			
+//			//			String err = store.addUser(user.getText(), new String(pass.getPassword()), UserType.SHOPPER);
+////			if(!err.equals("")){
+////				errLabel.setText("<html><font color='red'>" + err + "</font color></html>");
+////			}else{
+////				errLabel.setText("<html><font color='green'>User created successfully.</font color></html>");
+////			}
+//			
+//		}
+//	}
 }

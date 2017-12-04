@@ -21,6 +21,7 @@ public class GroceryGUI {
 	private GroceryStore store;
 	private LoginPanel login;
 	private StoreMainPanel mainPanel;
+	private NewUserPanel newUserPanel;
 	private CartPanel cartView;
 	private CheckoutPanel checkout;
 	private LargeProductPanel productView;
@@ -34,13 +35,18 @@ public class GroceryGUI {
 		frame.setMinimumSize(new Dimension(1280, 720));
 		this.store = store;
 		login = new LoginPanel(store);
-		login.addLoginListener(new LoginListener());
 		
-		frame.add(login);
-		frame.pack();
+		showLoginPanel();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+	}
+	
+	public void showLoginPanel() {
+		login = new LoginPanel(store);
+		login.addActionListener(new LoginListener());
+		frame.add(login);
+		frame.pack();
 	}
 	
 	public GroceryStore getStore(){
@@ -58,6 +64,14 @@ public class GroceryGUI {
 		mainPanel = new StoreMainPanel(store);
 		mainPanel.addActionListener(new MainPanelListener());
 	}
+
+	public void showNewUserPanel() {
+		newUserPanel = new NewUserPanel(store);
+		newUserPanel.addNewUserListener(new NewUserListener());
+		frame.remove(login);
+		frame.add(newUserPanel);
+		frame.pack();
+	}
 	
 	public static BufferedImage getScaledImage(Image srcImg, int w, int h){
 	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -69,12 +83,19 @@ public class GroceryGUI {
 
 	    return resizedImg;
 	}
-	
+	//THIIIIIIIIIIIS Too
 	private class LoginListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(login.login()){
-				showMainPanel();
+			if(e.getActionCommand().equals("Login")) {
+				if(login.login()){
+					showMainPanel();
+				}
 			}
+
+			if(e.getActionCommand().equals("New User")) {
+				showNewUserPanel();
+			}
+			
 		}
 	}
 	
@@ -86,13 +107,27 @@ public class GroceryGUI {
 			} else if(e.getActionCommand().equals("checkout")){
 				checkout = new CheckoutPanel(store);
 				checkout.addActionListener(new CheckoutListener());
-				frame.add(checkout);
+				frame.add(checkout); {
+					showLoginPanel();
+				}
 			}
 			
 			frame.revalidate();
 			frame.repaint();
 			frame.pack();
 		}
+	}
+	///////WORKING ON THIS
+	private class NewUserListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(newUserPanel.newUser()) {
+				frame.remove(newUserPanel);
+				showLoginPanel();
+				//addCancel Button
+			}
+			
+		}
+		
 	}
 	
 	private class CheckoutListener implements ActionListener{
