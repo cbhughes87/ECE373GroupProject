@@ -20,7 +20,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		tomato.setName("Farmer Joe's Best Tomatoes");
-		tomato.setIDNum(1);
 		tomato.setPrice(5.00);
 		tomato.setQuantity(500);
 		tomato.setInfo("This is a vine-ripened tomato. All craftsdwarfship is of the highest quality. "
@@ -38,7 +37,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		potato.setName("Billy Joe's Country Potatoes");
-		potato.setIDNum(2);
 		potato.setPrice(3.99);
 		potato.setQuantity(5000);
 		potato.addRating(new Rating(5, "I haven't tasted potatoes like these since the famine!"));
@@ -53,7 +51,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		pomegranate.setName("Hades' Devilishly Good Pomegranates");
-		pomegranate.setIDNum(3);
 		pomegranate.setPrice(6.99);
 		pomegranate.setQuantity(200);
 		pomegranate.addRating(new Rating(5, "These pomegranates remind me of the ones that trapped me in Tartarus"));
@@ -69,7 +66,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		lettuce.setName("Sank the Titanic Lettuce");
-		lettuce.setIDNum(4);
 		lettuce.setPrice(1.99);
 		lettuce.setQuantity(300);
 		lettuce.addRating(new Rating(4, "Salad is good for you, right?"));
@@ -85,7 +81,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		orange.setName("Florida Man Oranges");
-		orange.setIDNum(5);
 		orange.setPrice(0.99);
 		orange.setQuantity(80);
 		orange.addRating(new Rating(5, "These were the bomb!"));
@@ -102,7 +97,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		steak.setName("Cattleman Ranch Steaks");
-		steak.setIDNum(8);
 		steak.setPrice(5.00);
 		steak.setQuantity(80);
 		steak.addRating(new Rating(5, "Tender and well-marbled"));
@@ -115,14 +109,13 @@ public class Main {
 		
 		Product lemons = new Product();
 		try{
-			lemons.openImage("./res/lemons.png");
+			lemons.openImage("./res/lemon.png");
 		} catch (IOException e){
 			e.printStackTrace();
 		}
 		lemons.setName("Cave Johnson's Signature Organic Lemons");
-		lemons.setIDNum(8);
-		lemons.setPrice(5.00);
-		lemons.setQuantity(80);
+		lemons.setPrice(50.00);
+		lemons.setQuantity(10);
 		lemons.addRating(new Rating(5, "I'm Cave Johnson, and I approve of these lemons. "
 				+ "Given directly by Life itself, they are "
 				+ "perfect for burning your enemy's house down"));
@@ -132,9 +125,7 @@ public class Main {
 		lemons.addRating(new Rating(5, "When life gives you lemons, don't make lemonade. Make life TAKE THE LEMONS BACK! "
 				+ "GET MAD! I DON'T WANT YOUR DAMN LEMONS! WHAT AM I SUPPOSED TO DO WITH THESE!? "
 				+ "DEMAND TO SEE LIFE'S MANAGER! MAKE LIFE RUE THE DAY IT THOUGHT IT COULD GIVE "
-				+ "CAVE JOHNSON LEMONS!! DO YOU KNOW WHO I AM!?! I'M THE MAN WHO'S GONNA BURN YOUR HOUSE DOWN... "
-				+ "With THE LEMONS! I'M GONNA GET MY ENGINEERS TO INVENT A COMBUSTIBLE LEMON THAT BURNS YOUR "
-				+ "HOUSE DOWN!!"));
+				+ "CAVE JOHNSON LEMONS!! DO YOU KNOW WHO I AM!?! I'M THE MAN WHO'S GONNA BURN YOUR HOUSE DOWN..."));
 		lemons.addRating(new Rating(5, "Tried to use these lemons in my iced tea, ended up with tea all over my house "
 				+ "and down a hand. 10/10 would explode again!"));
 		lemons.setUnit("grenade");
@@ -155,8 +146,8 @@ public class Main {
 		meat.getInventory().addProduct(steak);
 		
 		Department ordnance = new Department();
-		meat.setName("Ordnance");
-		meat.getInventory().addProduct(lemons);
+		ordnance.setName("Ordnance");
+		ordnance.getInventory().addProduct(lemons);
 		
 		store.addUser("ryan", "password", UserType.ADMIN);
 		store.addUser("james", "password", UserType.ADMIN);

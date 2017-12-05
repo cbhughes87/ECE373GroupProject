@@ -147,11 +147,12 @@ public class LargeProductPanel extends JPanel {
 		c.gridheight = 1;
 		c.gridwidth = 1;
 		c.insets = new Insets(5, 5, 5, 5);
+		c.weighty = 0.05;
 		for(int i = 0; i < prod.getRatings().size(); i++){
 			Rating rtg = prod.getRatings().get(i);
 			JLabel stars = createStars(rtg);
 			JMultilineLabel comment = new JMultilineLabel(rtg.getComment());
-			comment.setPreferredSize(new Dimension(600, starImageSize));
+			comment.setMinimumSize(new Dimension(600, starImageSize + 40));
 			c.gridx = 0;
 			c.gridy = i;
 			c.weightx = 0;
