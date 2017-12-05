@@ -209,6 +209,10 @@ public class ProductInfoPanel extends JPanel {
 		c.gridy = 10;
 		add(deptField, c);
 		
+		c.gridx = 1;
+		c.gridy = 11;
+		add(save, c);
+		
 		c.gridx = 2;
 		c.gridy = 1;
 		add(info, c);
@@ -242,8 +246,8 @@ public class ProductInfoPanel extends JPanel {
 		add(imgField, c);
 		
 		c.gridx = 2;
-		c.gridy = 10;
-		add(save, c);
+		c.gridy = 11;
+		add(cancel, c);
 	}
 	
 	private class ButtonListener implements ActionListener{

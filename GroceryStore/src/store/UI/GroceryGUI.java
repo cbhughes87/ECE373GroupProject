@@ -29,12 +29,14 @@ public class GroceryGUI {
 	private LargeProductPanel productView;
 	private AdminProductPanel adminProducts;
 	private AdminUserPanel adminUsers;
-	private ProductInfoPanel edit;
+	private ProductInfoPanel editProduct;
+	private UserInfoPanel editUser;
 	private JMenuBar menu;
 	private JMenu admin;
 	private JMenu file;
 	private JMenu employee;
 	private JMenuItem menuAdminProducts;
+	private JMenuItem menuAdminUsers;
 	private JMenuItem logout;
 	private JMenuItem menuManageInventory;
 	
@@ -53,7 +55,12 @@ public class GroceryGUI {
 		admin = new JMenu("Administration");
 		menuAdminProducts = new JMenuItem("Products");
 		menuAdminProducts.addActionListener(new MenuListener());
+		
+		menuAdminUsers = new JMenuItem("Users");
+		menuAdminUsers.addActionListener(new MenuListener());
+		
 		admin.add(menuAdminProducts);
+		admin.add(menuAdminUsers);
 		
 		file = new JMenu("File");
 		logout = new JMenuItem("Log Out");
@@ -135,10 +142,19 @@ public class GroceryGUI {
 				doLogout();
 			} else if(src.equals(menuAdminProducts)){
 				adminProducts = new AdminProductPanel(store);
-				adminProducts.addActionListener(new AdminProductListener());
+				adminProducts.addActionListener(new AdminListener());
 				frame.remove(currPanel);
 				frame.add(adminProducts, BorderLayout.CENTER);
 				currPanel = adminProducts;
+				frame.revalidate();
+				frame.repaint();
+				frame.pack();
+			} else if(src.equals(menuAdminUsers)){
+				adminUsers = new AdminUserPanel(store);
+				adminUsers.addActionListener(new AdminListener());
+				frame.remove(currPanel);
+				frame.add(adminUsers, BorderLayout.CENTER);
+				currPanel = adminUsers;
 				frame.revalidate();
 				frame.repaint();
 				frame.pack();
@@ -250,7 +266,7 @@ public class GroceryGUI {
 		}
 	}
 	
-	private class AdminProductListener implements ActionListener{
+	private class AdminListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			
 			if(e.getActionCommand().equals("back")){
@@ -261,15 +277,25 @@ public class GroceryGUI {
 			else if(e.getActionCommand().equals("remove")){
 				refreshMainPanel();
 			}
-			else {
+			else if(e.getActionCommand().contains("product")){
 				frame.remove(currPanel);
 				Product change = (Product)e.getSource();
 				if(change.getIDNum() == -1)
 					change = null;
-				edit = new ProductInfoPanel(store, change);
-				edit.addActionListener(new LargeProductListener());
-				currPanel = edit;
-				frame.add(edit, BorderLayout.CENTER);
+				editProduct = new ProductInfoPanel(store, change);
+				editProduct.addActionListener(new LargeProductListener());
+				currPanel = editProduct;
+				frame.add(editProduct, BorderLayout.CENTER);
+			}
+			else if(e.getActionCommand().contains("user")){
+				frame.remove(currPanel);
+				User change = (User)e.getSource();
+				if(change.getName() == null)
+					change = null;
+				editUser = new UserInfoPanel(store, change);
+				editUser.addActionListener(new LargeProductListener());
+				currPanel = editUser;
+				frame.add(editUser, BorderLayout.CENTER);
 			}
 			frame.revalidate();
 			frame.repaint();
