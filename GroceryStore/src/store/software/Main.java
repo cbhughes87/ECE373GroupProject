@@ -51,6 +51,9 @@ public class Main {
 			e.printStackTrace();
 		}
 		pomegranate.setName("Hades' Devilishly Good Pomegranates");
+		pomegranate.setInfo("Used to lure hapless Greek goddesses for the last 30 centuries, "
+				+ "Hades' Devilishly Good Pomegranates are the best fruit on the market to get "
+				+ "yourself a deity for a wife.");
 		pomegranate.setPrice(6.99);
 		pomegranate.setQuantity(200);
 		pomegranate.addRating(new Rating(5, "These pomegranates remind me of the ones that trapped me in Tartarus"));
@@ -83,6 +86,7 @@ public class Main {
 		orange.setName("Florida Man Oranges");
 		orange.setPrice(0.99);
 		orange.setQuantity(80);
+		orange.setInfo("Florida Man makes orange into hand grenade after alligator traps him in his backyard.");
 		orange.addRating(new Rating(5, "These were the bomb!"));
 		orange.addRating(new Rating(5, "An explosion of flavor in my mouth"));
 		orange.addRating(new Rating(1, "Literally a hand grenade, would not recommend for human consumption"));
@@ -119,9 +123,9 @@ public class Main {
 		lemons.addRating(new Rating(5, "I'm Cave Johnson, and I approve of these lemons. "
 				+ "Given directly by Life itself, they are "
 				+ "perfect for burning your enemy's house down"));
-		lemons.addRating(new Rating(5, "Very useful as lemon stealing wh... Oh, what's that? "
+		/*lemons.addRating(new Rating(5, "Very useful as lemon stealing wh... Oh, what's that? "
 				+ "We aren't allowed to say that word on the internet any more? Well then. *ahem* "
-				+ "These lemons are very useful as lemon stealing lady-of-the-night repellant."));
+				+ "These lemons are very useful as lemon stealing lady-of-the-night repellant."));*/
 		lemons.addRating(new Rating(5, "When life gives you lemons, don't make lemonade. Make life TAKE THE LEMONS BACK! "
 				+ "GET MAD! I DON'T WANT YOUR DAMN LEMONS! WHAT AM I SUPPOSED TO DO WITH THESE!? "
 				+ "DEMAND TO SEE LIFE'S MANAGER! MAKE LIFE RUE THE DAY IT THOUGHT IT COULD GIVE "

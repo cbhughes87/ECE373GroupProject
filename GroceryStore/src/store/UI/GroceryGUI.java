@@ -213,9 +213,11 @@ public class GroceryGUI {
 	///////WORKING ON THIS
 	private class NewUserListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(newUserPanel.newUser()) {
+			if(e.getActionCommand().equals("add") && newUserPanel.newUser()) {
 				showLoginPanel();
 				//addCancel Button
+			} else if(e.getActionCommand().equals("cancel")){
+				showLoginPanel();
 			}
 			
 		}

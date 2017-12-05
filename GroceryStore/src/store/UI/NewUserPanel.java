@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -34,19 +35,23 @@ public class NewUserPanel extends JPanel {
 	private JTextField user;
 	private JPasswordField pass;
 	private JLabel userLabel, passLabel;
-	private JButton createUserButton;
+	private JButton createUserButton, cancelButton;
 	private JLabel errLabel;
 	private ButtonGroup userGroup;
 	private JRadioButton shopper;
 	private JRadioButton employee;
 	private JRadioButton admin;
 	private GroceryStore store;
+	
+	private ArrayList<ActionListener> actionListeners;
 	public NewUserPanel(GroceryStore store){
 		super();
 		this.store = store;
 		int loginTopBottom = 250;
 		int loginTextSize = 20;
 		Font loginFont = new Font(null, Font.PLAIN, loginTextSize);
+		
+		actionListeners = new ArrayList<ActionListener>();
 		
 		setBackground(Color.white);
 		
@@ -55,7 +60,8 @@ public class NewUserPanel extends JPanel {
 		userLabel = new JLabel("Username");
 		passLabel = new JLabel("Password");
 		createUserButton = new JButton("Create User");
-		errLabel = new JLabel("");
+		cancelButton = new JButton("Cancel");
+		errLabel = new JLabel(" ");
 		
 		userGroup = new ButtonGroup();
 		shopper = new JRadioButton("Shopper");
@@ -106,6 +112,10 @@ public class NewUserPanel extends JPanel {
 		createUserButton.setFont(loginFont);
 		createUserButton.addActionListener(new NewUserListener());
 		
+		cancelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		cancelButton.setFont(loginFont);
+		cancelButton.addActionListener(new NewUserListener());
+		
 		errLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		errLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		errLabel.setFont(loginFont);
@@ -125,15 +135,22 @@ public class NewUserPanel extends JPanel {
 		add(admin);
 		add(Box.createVerticalGlue());
 		add(createUserButton);
+		add(cancelButton);
 		add(errLabel);
 		add(Box.createRigidArea(new Dimension(100, loginTopBottom)));
 		
 	}
 	public boolean newUser(){
-		store.addUser(user.getText(), new String(pass.getPassword()), getUserType());
-		//requires checking of password length
-//		errLabel.setText("<html><font color='red'>Incorrect username or password.</font color></html>");
-		return true;
+		String err = store.addUser(user.getText(), new String(pass.getPassword()), getUserType());
+		if(!err.equals("")){
+			errLabel.setText("<html><font color='red'>" + err + "</font color></html>");
+			return false;
+		}
+		else{
+			errLabel.setText("<html><font color='green'>User created successfully!</font color></html>");
+			return true;
+		}
+		
 	}
 	
 	public UserType getUserType() {
@@ -147,15 +164,26 @@ public class NewUserPanel extends JPanel {
 			return UserType.ADMIN;
 		}
 		else {
-			return UserType.SHOPPER;
+			return UserType.ERROR;
 		}
 	}
 	
 	public void addNewUserListener(ActionListener a){
-		createUserButton.addActionListener(a);
+		actionListeners.add(a);
 	}
 	private class NewUserListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			JButton src = (JButton)e.getSource();
+			if(src.equals(createUserButton)){
+				for(ActionListener a : actionListeners){
+					a.actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, "add"));
+				}
+			}
+			else if(src.equals(cancelButton)){
+				for(ActionListener a : actionListeners){
+					a.actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, "cancel"));
+				}
+			}
 			
 			//			String err = store.addUser(user.getText(), new String(pass.getPassword()), UserType.SHOPPER);
 //			if(!err.equals("")){
