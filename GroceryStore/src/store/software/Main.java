@@ -125,7 +125,7 @@ public class Main {
 		meat.setName("Meat");
 		meat.getInventory().addProduct(steak);
 		
-		store.addUser("ryan", "password", UserType.SHOPPER);
+		store.addUser("ryan", "password", UserType.ADMIN);
 		store.addDepartment(produce);
 		store.addDepartment(meat);
 		User ryan = store.getUser("ryan", "password");

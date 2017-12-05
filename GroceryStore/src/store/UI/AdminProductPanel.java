@@ -15,25 +15,47 @@ import store.objects.GroceryStore;
 import store.objects.Product;
 
 public class AdminProductPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3373655721223889533L;
+
 	private static final int topBottomSpacing = 200;
 	
 	private GroceryStore store;
 	private JLabel productMan;
-	private JButton create, remove, edit;
+	private JButton create, remove, edit, back;
+	private Product dummy;
 	
 	private ArrayList<ActionListener> actionListeners;
 	
 	public AdminProductPanel(GroceryStore gstore){
 		store = gstore;
+		dummy = new Product();
+		dummy.setIDNum(-1);
+		actionListeners = new ArrayList<ActionListener>();
 		productMan = new JLabel("Product Management");
 		create = new JButton("Create Product");
 		remove = new JButton("Remove Product");
 		edit = new JButton("Edit Product");
+		back = new JButton("<- Back");
 		
+		productMan.setAlignmentX(CENTER_ALIGNMENT);
 		boolean enable = store.getCurrUser().getPerms().getPermission("inventory");
 		create.setEnabled(enable);
+		create.setAlignmentX(CENTER_ALIGNMENT);
+		create.addActionListener(new ProductChangeListener());
+		
 		remove.setEnabled(enable);
+		remove.setAlignmentX(CENTER_ALIGNMENT);
+		remove.addActionListener(new ProductChangeListener());
+		
 		edit.setEnabled(enable);
+		edit.setAlignmentX(CENTER_ALIGNMENT);
+		edit.addActionListener(new ProductChangeListener());
+		
+		back.setAlignmentX(CENTER_ALIGNMENT);
+		back.addActionListener(new ProductChangeListener());
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(Box.createVerticalStrut(topBottomSpacing));
@@ -42,6 +64,7 @@ public class AdminProductPanel extends JPanel {
 		add(create);
 		add(remove);
 		add(edit);
+		add(back);
 		add(Box.createGlue());
 		add(Box.createVerticalStrut(topBottomSpacing));
 	}
@@ -66,6 +89,11 @@ public class AdminProductPanel extends JPanel {
 			else if(source.equals(edit)){
 				editProduct();
 			}
+			else if(source.equals(back)){
+				for(ActionListener a : actionListeners){
+					a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "back"));
+				}
+			}
 		}
 
 		private void editProduct() {
@@ -78,11 +106,14 @@ public class AdminProductPanel extends JPanel {
 		private void removeProduct() {
 			Product toEdit = getProduct("Remove");
 			toEdit.getDepartment().getInventory().removeProduct(toEdit);
+			for(ActionListener a : actionListeners){
+				a.actionPerformed(new ActionEvent(toEdit, ActionEvent.ACTION_PERFORMED, "remove"));
+			}
 		}
 
 		private void createProduct() {
 			for(ActionListener a : actionListeners){
-				a.actionPerformed(new ActionEvent(null, ActionEvent.ACTION_PERFORMED, "createproduct"));
+				a.actionPerformed(new ActionEvent(dummy, ActionEvent.ACTION_PERFORMED, "createproduct"));
 			}
 		}
 		
@@ -90,7 +121,7 @@ public class AdminProductPanel extends JPanel {
 			Product[] prods = store.getAllProducts();
 			Object[] strs = new Object[prods.length];
 			for(int i = 0; i < prods.length; i++){
-				strs[i] = prods.toString();
+				strs[i] = prods[i].toString();
 			}
 			String choice = (String)JOptionPane.showInputDialog(getParent(), 
 					"Choose a product to " + custom.toLowerCase(), 

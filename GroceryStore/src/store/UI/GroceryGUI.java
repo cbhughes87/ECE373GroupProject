@@ -1,4 +1,5 @@
 package store.UI;
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -31,26 +32,53 @@ public class GroceryGUI {
 	private ProductInfoPanel edit;
 	private JMenuBar menu;
 	private JMenu admin;
-	private JMenu shopper;
+	private JMenu file;
 	private JMenu employee;
+	private JMenuItem menuAdminProducts;
+	private JMenuItem logout;
+	private JMenuItem menuManageInventory;
 	
 	
 	public GroceryGUI(GroceryStore store){
-
+		currPanel = null;
 		frame = new JFrame("e-Groceries");
 		frame.setMinimumSize(new Dimension(1280, 720));
+		frame.setLayout(new BorderLayout());
 		this.store = store;		
 		showLoginPanel();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		menu = new JMenuBar();
+		
+		admin = new JMenu("Administration");
+		menuAdminProducts = new JMenuItem("Products");
+		menuAdminProducts.addActionListener(new MenuListener());
+		admin.add(menuAdminProducts);
+		
+		file = new JMenu("File");
+		logout = new JMenuItem("Log Out");
+		logout.addActionListener(new MenuListener());
+		file.add(logout);
+		
+		employee = new JMenu("Employees");
+		menuManageInventory = new JMenuItem("Manage Stock");
+		menuManageInventory.addActionListener(new MenuListener());
+		employee.add(menuManageInventory);
+		
+		menu.add(file);
+		menu.add(admin);
+		menu.add(employee);
 		
 	}
 	
 	public void showLoginPanel() {
 		login = new LoginPanel(store);
 		login.addActionListener(new LoginListener());
+		if(currPanel != null){
+			frame.remove(currPanel);
+		}
 		currPanel = login;
-		frame.add(login);
+		frame.add(login, BorderLayout.CENTER);
 		frame.pack();
 	}
 	
@@ -62,13 +90,16 @@ public class GroceryGUI {
 		refreshMainPanel();
 		frame.remove(currPanel);
 		currPanel = mainPanel;
-		frame.add(mainPanel);
+		frame.add(mainPanel, BorderLayout.CENTER);
+		frame.revalidate();
+		frame.repaint();
 		frame.pack();
 	}
 	
 	public void refreshMainPanel(){
 		mainPanel = new StoreMainPanel(store);
 		mainPanel.addActionListener(new MainPanelListener());
+		
 	}
 
 	public void showNewUserPanel() {
@@ -76,7 +107,7 @@ public class GroceryGUI {
 		newUserPanel.addNewUserListener(new NewUserListener());
 		frame.remove(currPanel);
 		currPanel = newUserPanel;
-		frame.add(newUserPanel);
+		frame.add(newUserPanel, BorderLayout.CENTER);
 		frame.pack();
 	}
 	
@@ -91,9 +122,27 @@ public class GroceryGUI {
 	    return resizedImg;
 	}
 	
+	private void doLogout(){
+		frame.remove(menu);
+		store.setCurrUser(null);
+		showLoginPanel();
+	}
+	
 	private class MenuListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			
+			JMenuItem src = (JMenuItem)e.getSource();
+			if(src.equals(logout)){
+				doLogout();
+			} else if(src.equals(menuAdminProducts)){
+				adminProducts = new AdminProductPanel(store);
+				adminProducts.addActionListener(new AdminProductListener());
+				frame.remove(currPanel);
+				frame.add(adminProducts, BorderLayout.CENTER);
+				currPanel = adminProducts;
+				frame.revalidate();
+				frame.repaint();
+				frame.pack();
+			}
 		}
 	}
 	
@@ -103,6 +152,7 @@ public class GroceryGUI {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("Login")) {
 				if(login.login()){
+					frame.add(menu, BorderLayout.PAGE_START);
 					showMainPanel();
 				}
 			}
@@ -117,12 +167,12 @@ public class GroceryGUI {
 		public void actionPerformed(ActionEvent e) {
 			frame.remove(currPanel);	
 			if(e.getActionCommand().equals("back")){
-				frame.add(mainPanel);
+				frame.add(mainPanel, BorderLayout.CENTER);
 				currPanel = mainPanel;
 			} else if(e.getActionCommand().equals("checkout")){
 				checkout = new CheckoutPanel(store);
 				checkout.addActionListener(new CheckoutListener());
-				frame.add(checkout);
+				frame.add(checkout, BorderLayout.CENTER);
 				currPanel = checkout;
 			}
 			
@@ -147,7 +197,7 @@ public class GroceryGUI {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("back")){
 				frame.remove(currPanel);	
-				frame.add(mainPanel);
+				frame.add(mainPanel, BorderLayout.CENTER);
 				currPanel = mainPanel;
 				frame.revalidate();
 				frame.repaint();
@@ -163,7 +213,7 @@ public class GroceryGUI {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("back")){
 				frame.remove(currPanel);	
-				frame.add(mainPanel);
+				frame.add(mainPanel, BorderLayout.CENTER);
 				currPanel = mainPanel;
 				frame.revalidate();
 				frame.repaint();
@@ -182,7 +232,7 @@ public class GroceryGUI {
 				frame.remove(currPanel);
 				cartView = new CartPanel(store);
 				cartView.addActionListener(new CartListener());
-				frame.add(cartView);
+				frame.add(cartView, BorderLayout.CENTER);
 				currPanel = cartView;
 				frame.pack();
 			}
@@ -191,7 +241,7 @@ public class GroceryGUI {
 				SmallProductPanel src = (SmallProductPanel)e.getSource();
 				productView = new LargeProductPanel(store, src.getContained());
 				productView.addActionListener(new LargeProductListener());
-				frame.add(productView);
+				frame.add(productView, BorderLayout.CENTER);
 				currPanel = productView;
 				frame.revalidate();
 				frame.repaint();
@@ -202,10 +252,28 @@ public class GroceryGUI {
 	
 	private class AdminProductListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			frame.remove(currPanel);
-			edit = new ProductInfoPanel(store, (Product)e.getSource());
-			currPanel = edit;
-			frame.add(edit);
+			
+			if(e.getActionCommand().equals("back")){
+				frame.remove(currPanel);
+				frame.add(mainPanel, BorderLayout.CENTER);
+				currPanel = mainPanel;
+			}
+			else if(e.getActionCommand().equals("remove")){
+				refreshMainPanel();
+			}
+			else {
+				frame.remove(currPanel);
+				Product change = (Product)e.getSource();
+				if(change.getIDNum() == -1)
+					change = null;
+				edit = new ProductInfoPanel(store, change);
+				edit.addActionListener(new LargeProductListener());
+				currPanel = edit;
+				frame.add(edit, BorderLayout.CENTER);
+			}
+			frame.revalidate();
+			frame.repaint();
+			frame.pack();
 		}
 	}
 }
