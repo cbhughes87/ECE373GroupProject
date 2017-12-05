@@ -75,7 +75,7 @@ public class GroceryGUI {
 		
 		menu.add(file);
 		menu.add(admin);
-		menu.add(employee);
+		//menu.add(employee); //Did not finish in time.
 		
 	}
 	
