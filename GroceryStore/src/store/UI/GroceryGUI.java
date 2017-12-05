@@ -18,6 +18,7 @@ import javax.swing.*;
 
 public class GroceryGUI {
 	private JFrame frame;
+	private JPanel currPanel;
 	private GroceryStore store;
 	private LoginPanel login;
 	private StoreMainPanel mainPanel;
@@ -27,15 +28,18 @@ public class GroceryGUI {
 	private LargeProductPanel productView;
 	private AdminProductPanel adminProducts;
 	private AdminUserPanel adminUsers;
+	private ProductInfoPanel edit;
+	private JMenuBar menu;
+	private JMenu admin;
+	private JMenu shopper;
+	private JMenu employee;
 	
 	
 	public GroceryGUI(GroceryStore store){
 
 		frame = new JFrame("e-Groceries");
 		frame.setMinimumSize(new Dimension(1280, 720));
-		this.store = store;
-		login = new LoginPanel(store);
-		
+		this.store = store;		
 		showLoginPanel();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,6 +49,7 @@ public class GroceryGUI {
 	public void showLoginPanel() {
 		login = new LoginPanel(store);
 		login.addActionListener(new LoginListener());
+		currPanel = login;
 		frame.add(login);
 		frame.pack();
 	}
@@ -55,7 +60,8 @@ public class GroceryGUI {
 	
 	public void showMainPanel(){
 		refreshMainPanel();
-		frame.remove(login);
+		frame.remove(currPanel);
+		currPanel = mainPanel;
 		frame.add(mainPanel);
 		frame.pack();
 	}
@@ -68,7 +74,8 @@ public class GroceryGUI {
 	public void showNewUserPanel() {
 		newUserPanel = new NewUserPanel(store);
 		newUserPanel.addNewUserListener(new NewUserListener());
-		frame.remove(login);
+		frame.remove(currPanel);
+		currPanel = newUserPanel;
 		frame.add(newUserPanel);
 		frame.pack();
 	}
@@ -83,6 +90,14 @@ public class GroceryGUI {
 
 	    return resizedImg;
 	}
+	
+	private class MenuListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	
+	
 	//THIIIIIIIIIIIS Too
 	private class LoginListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -91,9 +106,7 @@ public class GroceryGUI {
 					showMainPanel();
 				}
 			}
-
 			if(e.getActionCommand().equals("New User")) {
-				
 				showNewUserPanel();
 			}
 			
@@ -102,13 +115,15 @@ public class GroceryGUI {
 	
 	private class CartListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			frame.remove(cartView);	
+			frame.remove(currPanel);	
 			if(e.getActionCommand().equals("back")){
 				frame.add(mainPanel);
+				currPanel = mainPanel;
 			} else if(e.getActionCommand().equals("checkout")){
 				checkout = new CheckoutPanel(store);
 				checkout.addActionListener(new CheckoutListener());
 				frame.add(checkout);
+				currPanel = checkout;
 			}
 			
 			frame.revalidate();
@@ -120,7 +135,6 @@ public class GroceryGUI {
 	private class NewUserListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(newUserPanel.newUser()) {
-				frame.remove(newUserPanel);
 				showLoginPanel();
 				//addCancel Button
 			}
@@ -132,8 +146,9 @@ public class GroceryGUI {
 	private class CheckoutListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("back")){
-				frame.remove(checkout);	
+				frame.remove(currPanel);	
 				frame.add(mainPanel);
+				currPanel = mainPanel;
 				frame.revalidate();
 				frame.repaint();
 				frame.pack();
@@ -147,8 +162,9 @@ public class GroceryGUI {
 	private class LargeProductListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("back")){
-				frame.remove(productView);	
+				frame.remove(currPanel);	
 				frame.add(mainPanel);
+				currPanel = mainPanel;
 				frame.revalidate();
 				frame.repaint();
 				frame.pack();
@@ -163,22 +179,33 @@ public class GroceryGUI {
 			if(e.getActionCommand().equals("refresh"))
 				frame.pack();
 			else if(e.getActionCommand().equals("viewcart")){
-				frame.remove(mainPanel);
+				frame.remove(currPanel);
 				cartView = new CartPanel(store);
 				cartView.addActionListener(new CartListener());
 				frame.add(cartView);
+				currPanel = cartView;
 				frame.pack();
 			}
 			else if(e.getActionCommand().equals("product")){
-				frame.remove(mainPanel);
+				frame.remove(currPanel);
 				SmallProductPanel src = (SmallProductPanel)e.getSource();
 				productView = new LargeProductPanel(store, src.getContained());
 				productView.addActionListener(new LargeProductListener());
 				frame.add(productView);
+				currPanel = productView;
 				frame.revalidate();
 				frame.repaint();
 				frame.pack();
 			}
+		}
+	}
+	
+	private class AdminProductListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			frame.remove(currPanel);
+			edit = new ProductInfoPanel(store, (Product)e.getSource());
+			currPanel = edit;
+			frame.add(edit);
 		}
 	}
 }

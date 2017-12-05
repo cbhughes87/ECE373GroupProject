@@ -140,8 +140,11 @@ public class NewUserPanel extends JPanel {
 		else if (employee.isSelected()) {
 			return UserType.EMPLOYEE;
 		}
-		else {
+		else if(admin.isSelected()) {
 			return UserType.ADMIN;
+		}
+		else {
+			return UserType.SHOPPER;
 		}
 	}
 	

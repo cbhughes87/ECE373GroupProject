@@ -4,22 +4,28 @@ import java.util.ArrayList;
 
 public class Inventory {
 	private ArrayList<Product> products;
+	private Department dept;
 
-	public Inventory() {
+	public Inventory(Department dept) {
 		products = new ArrayList<Product>();
+		this.dept = dept;
 	}
 	
 	public void addProduct(Product aProduct) {
-		products.add(aProduct);
+		if(!products.contains(aProduct))
+			products.add(aProduct);
+		if(aProduct.getDepartment() == null || !aProduct.getDepartment().equals(dept)){
+			aProduct.setDepartment(dept);
+		}
 	}
 	public ArrayList<Product> getProducts() {
 		return products;
 	}
 	
-	public void updateProduct(Product aProduct) {
-		//slightly messy implementation. Maybe check for a product with identical name or ID then update remaining info?
-		for(Product prod : products){
-		
-		}
+	public boolean removeProduct(Product p){
+		boolean toReturn = products.remove(p);
+		if(toReturn)
+			p.clearDepartment();
+		return toReturn;
 	}
 }

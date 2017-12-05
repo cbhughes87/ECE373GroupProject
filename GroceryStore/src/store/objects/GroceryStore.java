@@ -29,6 +29,16 @@ public class GroceryStore {
 		logs.add(errLog);
 	}
 	
+	public Product[] getAllProducts(){
+		ArrayList<Product> prods = new ArrayList<Product>();
+		for(Department dept : departments){
+			for(Product p : dept.getInventory().getProducts()){
+				prods.add(p);
+			}
+		}
+		return prods.toArray(new Product[1]);
+	}
+	
 	public void setCurrUser(User u){
 		currUser = u;
 	}

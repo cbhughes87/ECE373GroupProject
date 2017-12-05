@@ -1,5 +1,4 @@
 package store.software;
-import java.util.HashMap;
 public class Permissions {
 	private boolean canShop, 
 					canManageStock,
@@ -24,10 +23,16 @@ public class Permissions {
 		canViewLogs = logs;
 	}
 	
-	/*
-	 * 
-	 * 
-	 * 
+	/**
+	 *  Possible keys:<br><br>
+	 *  
+	 *  "canShop" alias "shop"<br>
+	 *  "canManageStock" alias "stock"<br>
+	 *  "canEditInventory" alias "inventory"<br>
+	 *  "canAddUsers" alias "add"<br>
+	 *  "canRemoveUsers" alias "rem"<br>
+	 *  "canEditPermissions" alias "perms"<br>
+	 *  "canViewLogs" alias "logs"<br>
 	 * */
 	public boolean getPermission(String key){
 		if(key.equals("canShop") || key.equals("shop"))

@@ -10,22 +10,48 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Product {
+	private static int currID = 0;
 	private String name, unit, info;
 	private int idNum;
 	private double quantity;
 	private ArrayList<Rating> userRatings;
 	private ArrayList<String> tags;
 	private double price;
+	private String imgPath;
 	private BufferedImage img;
+	private Department dept;
 	public Product(){
 		name = "";
 		unit = "item";
 		info = "";
-		idNum = -1;
+		idNum = currID;
+		currID++;
 		quantity = 0;
 		userRatings = new ArrayList<Rating>();
 		tags = new ArrayList<String>();
 		price = -1;
+		dept = null;
+	}
+	
+	@Override
+	public String toString(){
+		return name;
+	}
+	
+	public void setDepartment(Department newDept){
+		if(dept != null){
+			dept.getInventory().removeProduct(this);
+		}
+		dept = newDept;	
+		newDept.getInventory().addProduct(this);
+	}
+	
+	public Department getDepartment(){
+		return dept;
+	}
+	
+	public void clearDepartment(){
+		dept = null;
 	}
 	
 	public double averageRating(){
@@ -120,6 +146,11 @@ public class Product {
 	
 	public void openImage(String path) throws IOException{
 		img = ImageIO.read(new File(path));
+		imgPath = path;
+	}
+	
+	public String getImagePath(){
+		return imgPath;
 	}
 	
 	public BufferedImage getImage(){

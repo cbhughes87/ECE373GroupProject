@@ -9,7 +9,7 @@ public class Department {
 	
 	public Department() {
 		name = "";
-		inventory = new Inventory();
+		inventory = new Inventory(this);
 	}
 	
 	public void setName(String aName) {
