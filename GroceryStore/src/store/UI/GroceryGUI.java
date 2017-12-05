@@ -93,6 +93,7 @@ public class GroceryGUI {
 			}
 
 			if(e.getActionCommand().equals("New User")) {
+				
 				showNewUserPanel();
 			}
 			
@@ -107,9 +108,7 @@ public class GroceryGUI {
 			} else if(e.getActionCommand().equals("checkout")){
 				checkout = new CheckoutPanel(store);
 				checkout.addActionListener(new CheckoutListener());
-				frame.add(checkout); {
-					showLoginPanel();
-				}
+				frame.add(checkout);
 			}
 			
 			frame.revalidate();
