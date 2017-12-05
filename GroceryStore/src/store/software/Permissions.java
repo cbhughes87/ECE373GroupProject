@@ -24,6 +24,11 @@ public class Permissions {
 		canViewLogs = logs;
 	}
 	
+	/*
+	 * 
+	 * 
+	 * 
+	 * */
 	public boolean getPermission(String key){
 		if(key.equals("canShop") || key.equals("shop"))
 			return canShop;
