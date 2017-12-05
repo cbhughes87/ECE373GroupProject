@@ -28,6 +28,7 @@ public class GroceryGUI {
 	private CheckoutPanel checkout;
 	private LargeProductPanel productView;
 	private AdminProductPanel adminProducts;
+	private StockPanel stockPanel;
 	private AdminUserPanel adminUsers;
 	private ProductInfoPanel editProduct;
 	private UserInfoPanel editUser;
@@ -140,7 +141,8 @@ public class GroceryGUI {
 			JMenuItem src = (JMenuItem)e.getSource();
 			if(src.equals(logout)){
 				doLogout();
-			} else if(src.equals(menuAdminProducts)){
+			} 
+			else if(src.equals(menuAdminProducts)){
 				adminProducts = new AdminProductPanel(store);
 				adminProducts.addActionListener(new AdminListener());
 				frame.remove(currPanel);
@@ -159,11 +161,20 @@ public class GroceryGUI {
 				frame.repaint();
 				frame.pack();
 			}
+			else if(src.equals(menuManageInventory)) {
+				stockPanel = new StockPanel(store);
+				stockPanel.addActionListener(new StockPanelListener());
+				frame.remove(currPanel);
+				frame.add(stockPanel);
+				currPanel = stockPanel;
+				frame.revalidate();
+				frame.repaint();
+				frame.pack();
+			}
 		}
 	}
 	
 	
-	//THIIIIIIIIIIIS Too
 	private class LoginListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("Login")) {
@@ -263,6 +274,23 @@ public class GroceryGUI {
 				frame.repaint();
 				frame.pack();
 			}
+		}
+	}
+
+	private class StockPanelListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equals("Login")) {
+				if(login.login()){
+					frame.add(menu, BorderLayout.PAGE_START);
+					showMainPanel();
+				}
+			}
+			if(e.getActionCommand().equals("back")) {
+				frame.remove(currPanel);
+				frame.add(mainPanel, BorderLayout.CENTER);
+				currPanel = mainPanel;
+			}
+			
 		}
 	}
 	
