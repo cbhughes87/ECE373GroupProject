@@ -75,7 +75,7 @@ public class GroceryGUI {
 		
 		menu.add(file);
 		menu.add(admin);
-		//menu.add(employee); //Did not finish in time.
+		//menu.add(employee); //Did not finish in time. SIKE!
 		
 	}
 	
@@ -180,6 +180,8 @@ public class GroceryGUI {
 			if(e.getActionCommand().equals("Login")) {
 				if(login.login()){
 					frame.add(menu, BorderLayout.PAGE_START);
+					employee.setEnabled(store.getCurrUser().getPerms().getPermission("stock"));
+					admin.setEnabled(store.getCurrUser().getPerms().getPermission("add"));
 					showMainPanel();
 				}
 			}

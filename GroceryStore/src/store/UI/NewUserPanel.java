@@ -59,8 +59,11 @@ public class NewUserPanel extends JPanel {
 		
 		userGroup = new ButtonGroup();
 		shopper = new JRadioButton("Shopper");
+		shopper.setBackground(Color.white);
 		employee = new JRadioButton("Employee");
+		employee.setBackground(Color.white);
 		admin = new JRadioButton("Admin");
+		admin.setBackground(Color.white);
 		
 //		shopper.setHorizontalAlignment(JRadioButton.LEADING);
 //		shopper.setHorizontalTextPosition(JRadioButton.LEADING);

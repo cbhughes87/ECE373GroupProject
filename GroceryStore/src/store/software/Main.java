@@ -113,6 +113,35 @@ public class Main {
 		steak.addTag("manly");
 		steak.addTag("red meat");
 		
+		Product lemons = new Product();
+		try{
+			lemons.openImage("./res/lemons.png");
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		lemons.setName("Cave Johnson's Signature Organic Lemons");
+		lemons.setIDNum(8);
+		lemons.setPrice(5.00);
+		lemons.setQuantity(80);
+		lemons.addRating(new Rating(5, "I'm Cave Johnson, and I approve of these lemons. "
+				+ "Given directly by Life itself, they are "
+				+ "perfect for burning your enemy's house down"));
+		lemons.addRating(new Rating(5, "Very useful as lemon stealing wh... Oh, what's that? "
+				+ "We aren't allowed to say that word on the internet any more? Well then. *ahem* "
+				+ "These lemons are very useful as lemon stealing lady-of-the-night repellant."));
+		lemons.addRating(new Rating(5, "When life gives you lemons, don't make lemonade. Make life TAKE THE LEMONS BACK! "
+				+ "GET MAD! I DON'T WANT YOUR DAMN LEMONS! WHAT AM I SUPPOSED TO DO WITH THESE!? "
+				+ "DEMAND TO SEE LIFE'S MANAGER! MAKE LIFE RUE THE DAY IT THOUGHT IT COULD GIVE "
+				+ "CAVE JOHNSON LEMONS!! DO YOU KNOW WHO I AM!?! I'M THE MAN WHO'S GONNA BURN YOUR HOUSE DOWN... "
+				+ "With THE LEMONS! I'M GONNA GET MY ENGINEERS TO INVENT A COMBUSTIBLE LEMON THAT BURNS YOUR "
+				+ "HOUSE DOWN!!"));
+		lemons.addRating(new Rating(5, "Tried to use these lemons in my iced tea, ended up with tea all over my house "
+				+ "and down a hand. 10/10 would explode again!"));
+		lemons.setUnit("grenade");
+		lemons.addTag("manly");
+		lemons.addTag("Organic");
+		lemons.addTag("Big boom");
+		
 		Department produce = new Department();
 		produce.setName("Produce");
 		produce.getInventory().addProduct(tomato);
@@ -125,9 +154,17 @@ public class Main {
 		meat.setName("Meat");
 		meat.getInventory().addProduct(steak);
 		
+		Department ordnance = new Department();
+		meat.setName("Ordnance");
+		meat.getInventory().addProduct(lemons);
+		
 		store.addUser("ryan", "password", UserType.ADMIN);
+		store.addUser("james", "password", UserType.ADMIN);
+		store.addUser("chris", "password", UserType.ADMIN);
+		store.addUser("xlemons", "HighInVitaminC4", UserType.SHOPPER);
 		store.addDepartment(produce);
 		store.addDepartment(meat);
+		store.addDepartment(ordnance);
 		User ryan = store.getUser("ryan", "password");
 		ryan.addToCart(pomegranate, 5);
 		ryan.addToCart(steak, 5);
