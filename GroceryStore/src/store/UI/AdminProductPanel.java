@@ -98,6 +98,8 @@ public class AdminProductPanel extends JPanel {
 
 		private void editProduct() {
 			Product toEdit = getProduct("Edit");
+			if(toEdit == null)
+				return;
 			for(ActionListener a : actionListeners){
 				a.actionPerformed(new ActionEvent(toEdit, ActionEvent.ACTION_PERFORMED, "editproduct"));
 			}
@@ -105,6 +107,8 @@ public class AdminProductPanel extends JPanel {
 
 		private void removeProduct() {
 			Product toEdit = getProduct("Remove");
+			if(toEdit == null)
+				return;
 			toEdit.getDepartment().getInventory().removeProduct(toEdit);
 			for(ActionListener a : actionListeners){
 				a.actionPerformed(new ActionEvent(toEdit, ActionEvent.ACTION_PERFORMED, "remove"));

@@ -16,6 +16,6 @@ public class JMultilineLabel extends JTextArea{
         setWrapStyleWord(true);  
         setLineWrap(true);
         setBorder(new EmptyBorder(5, 5, 5, 5));
-        setColumns(300);
+        //setColumns(300);
     }
 } 

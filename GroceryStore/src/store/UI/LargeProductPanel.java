@@ -133,6 +133,8 @@ public class LargeProductPanel extends JPanel {
 	private JPanel constructInformation(){
 		JPanel toReturn = new JPanel();
 		JMultilineLabel infoText = new JMultilineLabel(prod.getInfo());
+		infoText.setWrapStyleWord(true);
+		infoText.setLineWrap(true);
 		infoText.setPreferredSize(new Dimension(500, 360));
 		infoText.setAlignmentX(LEFT_ALIGNMENT);
 		toReturn.add(infoText);
